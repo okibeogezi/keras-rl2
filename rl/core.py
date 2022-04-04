@@ -178,7 +178,7 @@ class Agent:
                     if self.processor is not None:
                         observation, r, done, info = self.processor.process_step(observation, r, done, info)
                     for key, value in info.items():
-                        if not np.isreal(value):
+                        if not np.isreal(value) or isinstance(value, dict):
                             continue
                         if key not in accumulated_info:
                             accumulated_info[key] = np.zeros_like(value)
@@ -352,7 +352,7 @@ class Agent:
                     callbacks.on_action_end(action)
                     reward += r
                     for key, value in info.items():
-                        if not np.isreal(value):
+                        if not np.isreal(value) or isinstance(value, dict):
                             continue
                         if key not in accumulated_info:
                             accumulated_info[key] = np.zeros_like(value)
